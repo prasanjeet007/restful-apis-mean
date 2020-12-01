@@ -12,7 +12,7 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Headers", '*');
     next();
 });
-// app.use(cors());
+app.use(cors());
     // intercept OPTIONS method if ('OPTIONS' == req.method) { res.send(200); } else { next(); } });
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
