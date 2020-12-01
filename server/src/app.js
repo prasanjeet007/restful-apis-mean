@@ -3,9 +3,26 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 require('../mongoose/mongoose');
 const routerr = require('../routers/router');
+// add this code
+const whitelist = ['http://localhost:3000']; // list of allow domain
+
+const corsOptions = {
+    origin: function (origin, callback) {
+        if (!origin) {
+            return callback(null, true);
+        }
+
+        if (whitelist.indexOf(origin) === -1) {
+            var msg = 'The CORS policy for this site does not ' +
+                'allow access from the specified Origin.';
+            return callback(new Error(msg), false);
+        }
+        return callback(null, true);
+    }
+}
 const app = express();
-app.use(cors());
 const PORT = process.env.PORT || 3000;
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(express.json());
