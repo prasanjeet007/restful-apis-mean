@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 require('../mongoose/mongoose');
 const routerr = require('../routers/router');
 // add this code
-const whitelist = ['http://localhost:4200']; // list of allow domain
+const whitelist = ['http://localhost:4200', 'https://intense-island-95023.herokuapp.com']; // list of allow domain
 
 const corsOptions = {
     origin: function (origin, callback) {
