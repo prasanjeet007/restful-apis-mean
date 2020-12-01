@@ -34,11 +34,8 @@ router.post('/login', (req,res) => {
     })
 })
 router.get('/registers', async(req, res) => {
-      try {
-        const registers = await Register.find();
-        res.status(200).send(registers);
-      } catch (e) {
-          res.status(404).send(e.message);
-      }
+     res.send({
+         "name": "Prasanajeet"
+     })
   });
 module.exports = router;
