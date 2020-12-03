@@ -20,7 +20,7 @@ router.post('/registers', (req, res) => {
 router.post('/login', (req,res) => {
     Register.find().then(data => {
         data.forEach(element => {
-            if (element.pass !== req.body.pass && element.email !== req.body.email) {
+            if (window.atob(element.pass) !== req.body.pass && element.email !== req.body.email) {
                 res.status(401).json({
                    error: 'Crendentials mismatch'
                 });
