@@ -18,16 +18,18 @@ router.post('/registers', (req, res) => {
   })
 });
 router.post('/login', (req,res) => {
+    // const registerdata = new Register()
     Register.find().then(data => {
         data.forEach(element => {
-            element.pass = window.atob(element.pass);
+            element.pass = Buffer.from(element.pass, 'base64').toString();
+            req.body.pass = Buffer.from(req.body.pass, 'base64').toString();
             if (element.pass !== req.body.pass && element.email !== req.body.email) {
-                res.status(401).json({
+                // res.setHeader('login','val');
+               res.status(401).json({
                    error: 'Crendentials mismatch'
                 });
-                return false;
             } else {
-                res.status(200).json({
+               res.status(200).json({
                     success: 'Login Successfully'
                 })
             }
