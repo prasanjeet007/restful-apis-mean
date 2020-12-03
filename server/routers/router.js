@@ -35,7 +35,7 @@ router.post('/login', (req,res) => {
 })
 router.get('/registers', async(req, res) => {
      try {
-         const registerData = await Register();
+         const registerData = await Register.find();
          res.status(200).send(registerData);
      } catch(e) {
          res.status(404).send(e.message);
