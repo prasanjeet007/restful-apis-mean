@@ -17,7 +17,7 @@ router.post('/registers', (req, res) => {
       res.status(404).send(err.message);
   })
 });
-router.post('/login', (req,res) => {
+router.post('/login', (req,res,next) => {
     // const registerdata = new Register()
     Register.find({}).then(data => {
         data.forEach(element => {
@@ -29,9 +29,10 @@ router.post('/login', (req,res) => {
                    error: 'Crendentials mismatch'
                 });
             }
-               res.status(200).json({
-                    success: 'Login Successfully'
+               res.status(200).send({
+                    "success": 'Login Successfully'
                 });
+                next();
         });
     }).catch(e => {
         console.log(e.message);
