@@ -7,8 +7,8 @@ router.post('/registers', (req, res) => {
         lname: req.body.lname,
         email: req.body.email,
         phone: req.body.phone,
-        pass: req.body.pass,
-        cpass: req.body.cpass
+        pass: encodeURIComponent(req.body.pass),
+        cpass: encodeURIComponent(req.body.cpass)
     }
     const register = new Register(data);
     register.save().then(data => {
@@ -19,21 +19,22 @@ router.post('/registers', (req, res) => {
 });
 router.post('/login', (req,res) => {
     // const registerdata = new Register()
-    Register.find().then(data => {
+    Register.find({}).then(data => {
         data.forEach(element => {
-            element.pass = Buffer.from(element.pass, 'base64').toString();
-            req.body.pass = Buffer.from(req.body.pass, 'base64').toString();
+            // req.body.pass = Buffer.from(req.body.pass, 'base64').toString();
+            // console.log(req.body.pass);
             if (element.pass !== req.body.pass && element.email !== req.body.email) {
                 // res.setHeader('login','val');
-               res.status(401).json({
+               return res.status(400).json({
                    error: 'Crendentials mismatch'
                 });
-            } else {
+            }
                res.status(200).json({
                     success: 'Login Successfully'
-                })
-            }
+                });
         });
+    }).catch(e => {
+        console.log(e.message);
     })
 })
 router.get('/registers', async(req, res) => {
