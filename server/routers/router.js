@@ -23,16 +23,16 @@ router.post('/login', (req,res,next) => {
         data.forEach(element => {
             // req.body.pass = Buffer.from(req.body.pass, 'base64').toString();
             // console.log(req.body.pass);
-            if (element.pass !== req.body.pass && element.email !== req.body.email) {
+            if (element.pass === req.body.pass && element.email === req.body.email) {
                 // res.setHeader('login','val');
-               return res.status(400).json({
-                   error: 'Crendentials mismatch'
+               return res.status(200).send({
+                   status: 'Login Successfully'
+                });
+            } else {
+                res.status(400).send({
+                    error: 'Credential Mismatch'
                 });
             }
-               res.status(200).send({
-                    "success": 'Login Successfully'
-                });
-                next();
         });
     }).catch(e => {
         console.log(e.message);
