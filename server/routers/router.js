@@ -28,12 +28,12 @@ router.post('/login', (req,res,next) => {
                return res.status(200).send({
                    status: 'Login Successfully'
                 });
-            } else {
-                res.status(400).send({
-                    error: 'Credential Mismatch'
-                });
             }
+        }); 
+        res.status(400).send({
+            error: 'Credential Mismatch'
         });
+
     }).catch(e => {
         console.log(e.message);
     })
