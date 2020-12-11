@@ -1,4 +1,5 @@
 const express = require('express');
+const jwt = require('jsonwebtoken')
 const Register = require('../models/register');
 const router = express.Router();
 router.post('/registers', (req, res) => {
@@ -20,8 +21,9 @@ router.post('/registers', (req, res) => {
 router.post('/login', (req,res,next) => {
     // const registerdata = new Register()
     Register.findOne({email: req.body.email, pass: req.body.pass}).then(data => {
+        const token = jwt.sign({_id:data._id},'authentication');
      return res.status(200).send({
-         data: data
+         token: token
      });
     }).catch(e => {
         throw new Error('Invalid Credentials');
