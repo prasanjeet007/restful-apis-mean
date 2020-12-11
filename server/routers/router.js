@@ -22,9 +22,16 @@ router.post('/login', (req,res,next) => {
     // const registerdata = new Register()
     Register.findOne({email: req.body.email, pass: req.body.pass}).then(data => {
         const token = jwt.sign({_id:data._id},'authentication');
-     return res.status(200).send({
-         token: token
-     });
+        const verify = jwt.verify(token, 'authentication');
+        if (verify) {
+            return res.status(200).send({
+                token: token
+            });
+        } else {
+            return res.status(404).send({
+                err: 'Invalid Crendentials'
+            });
+        }
     }).catch(e => {
         throw new Error('Invalid Credentials');
     })
