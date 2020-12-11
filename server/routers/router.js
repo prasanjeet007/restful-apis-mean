@@ -21,7 +21,7 @@ router.post('/registers', (req, res) => {
 router.post('/login', (req,res,next) => {
     // const registerdata = new Register()
     Register.findOne({email: req.body.email, pass: req.body.pass}).then(data => {
-        const token = jwt.sign({_id:data._id},'authentication');
+        const token = jwt.sign({_id:data._id},'authentication', {expiresIn: '1h'});
         const verify = jwt.verify(token, 'authentication');
         if (verify) {
             return res.status(200).send({
