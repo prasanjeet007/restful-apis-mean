@@ -20,7 +20,9 @@ router.post('/registers', (req, res) => {
 router.post('/login', (req,res,next) => {
     // const registerdata = new Register()
     Register.findOne({email: req.body.email, pass: req.body.pass}).then(data => {
-     return res.status(200).send('Login Successfully');
+     return res.status(200).send({
+         data: data
+     });
     }).catch(e => {
         throw new Error('Invalid Credentials');
     })
