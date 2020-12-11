@@ -19,23 +19,10 @@ router.post('/registers', (req, res) => {
 });
 router.post('/login', (req,res,next) => {
     // const registerdata = new Register()
-    Register.find({}).then(data => {
-        data.forEach(element => {
-            // req.body.pass = Buffer.from(req.body.pass, 'base64').toString();
-            // console.log(req.body.pass);
-            if (element.pass === req.body.pass && element.email === req.body.email) {
-                // res.setHeader('login','val');
-               return res.status(200).send({
-                   status: 'Login Successfully'
-                });
-            }
-        }); 
-        res.status(400).send({
-            error: 'Credential Mismatch'
-        });
-
+    Register.findOne({email: req.body.email, pass: req.body.pass}).then(data => {
+     return res.status(200).send('Login Successfully');
     }).catch(e => {
-        console.log(e.message);
+        throw new Error('Invalid Credentials');
     })
 })
 router.get('/registers', async(req, res) => {
